@@ -50,4 +50,7 @@
 
     //Rutas para el primer Cotrolador
     Route::get("/index/{nombre?}", [\App\Http\Controllers\PrimerControlador::class, 'index']);
+
+    //Rutas para el controlador resource de Post
+    Route::resource("/posts", \App\Http\Controllers\Dashboard\PostController::class);
 ?>
