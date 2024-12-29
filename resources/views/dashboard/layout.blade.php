@@ -10,8 +10,8 @@
     <header style="border: solid 2px orangered; margin: 15px auto; max-width: 600px">
         @yield('header')
     </header>
-{{--    Seccion de body--}}
-    <div style="border: solid 2px purple; margin: 15px auto; max-width: 600px">
+    {{--Seccion de body--}}
+    <div style="border: solid 2px purple; margin: 15px auto; max-width: 900px">
         @yield('body')
     </div>
     {{--Seccion de footer--}}

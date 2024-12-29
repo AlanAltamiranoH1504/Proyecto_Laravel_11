@@ -1,38 +1,35 @@
-@extends("dashboard.layout")
+@extends('dashboard.layout')
 
-{{--Seccion de cabecera--}}
-@section("header")
-    <h1 style="text-align: center">MANEJO DE FORMULARIOS CON CRUD Y MVC</h1>
+@section('header')
+    <h1 style="text-align: center">EDICION DE POST</h1>
 @endsection
 
-{{--Seccion de body--}}
-@section("body")
-    <h1 style="text-align: center">Aqui es donde va a estar el formulario</h1>
+@section('body')
     @include('dashboard.fragment.erroresFormulario')
 
-    {{--Definimos el formulario--}}
     <fieldset style="width: 400px; margin: 15px auto">
-        <form method="post" action="{{action([\App\Http\Controllers\Dashboard\PostController::class, "store"])}}">
+        <form action="{{action([\App\Http\Controllers\Dashboard\PostController::class, 'update'], ['post' => $post->id])}}" method="post">
+            @method('PUT')
             {{csrf_field()}}
             <p>
                 <label for="title">Title: </label>
-                <input type="text" name="title" id="title">
+                <input type="text" name="title" id="title" value="{{old('title', $post->title)}}">
             </p>
             <p>
                 <label for="slug">Slug: </label>
-                <input type="text" name="slug" id="slug">
+                <input type="text" name="slug" id="slug" value="{{old('slug', $post->slug)}}">
             </p>
             <p>
                 <label for="description">Description: </label>
-                <input type="text" name="description" id="description">
+                <input type="text" name="description" id="description" value="{{old('description', $post->description)}}">
             </p>
             <p>
                 <label for="content">Content: </label>
-                <input type="text" name="content" id="content">
+                <input type="text" name="content" id="content" value="{{old('content', $post->content)}}">
             </p>
             <p>
                 <label for="image">Image: </label>
-                <input type="text" name="image" id="image">
+                <input type="text" name="image" id="image" value="{{old('image', $post->image)}}">
             </p>
             <p>
                 <label for="posted">Posted: </label>
@@ -43,7 +40,7 @@
                 </select>
             </p>
             <p>
-                <label for="category_id">Category ID: </label>
+                <label for="categoria_id">Category ID: </label>
                 <select id="categoria_id" name="categoria_id">
                     <option value="">Seleccione una opcion</option>
                     @foreach($categorias as $categoria)
@@ -52,19 +49,19 @@
                 </select>
             </p>
             <div style="margin: 0px auto; max-width: 50px">
-                <input type="submit" value="Enviar" style="margin: 10px auto">
+                <input type="submit" value="Actualizar" style="margin: 10px auto">
             </div>
         </form>
     </fieldset>
     <div style="max-width: 200px; margin: 20px auto; text-align: center;">
         <a href="{{action([\App\Http\Controllers\Dashboard\PostController::class, 'index'])}}"
-           style=" border:solid 1px black; display: inline-block; background-color: green; color: white; padding: 12px 20px; text-align: center; font-weight: bold; text-transform: uppercase; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease;">
+           style="border:solid 1px black; display: inline-block; background-color: green; color: white; padding: 12px 20px; text-align: center; font-weight: bold; text-transform: uppercase; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease;">
             Ir a Listado
         </a>
     </div>
+
 @endsection
 
-{{--Seccion de footer--}}
-@section("footer")
+@section('footer')
     <h3 style="text-align: center">Alan Altamirano Hernandez - Diciembre 2024</h3>
 @endsection
