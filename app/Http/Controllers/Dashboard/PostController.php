@@ -27,22 +27,12 @@ use Illuminate\Http\Request;
 
         //Metodo que guarda en la db la nueva entidad que se creo
         public function store(StoreRequest $request){
-            //Validamos los datos con el metodo validate
-            /*$validatedData = $request->validate([
-                'title' => 'required|string|max:500',
-                'slug' => 'required|string|max:500',
-                'description' => 'required|string',
-                'content' => 'required|string',
-                'image' => 'string',
-                'posted' => 'string',
-                'categoria_id' => 'required|string'
-            ]);*/
             //Validamos los datos con la clase StoreRequest
             $validatedData = $request->validated();
             //Guardamos el nuevo objeto en la db
             try {
                 Post::create($validatedData);
-                return redirect("/posts");
+                return redirect("/posts")->with('success', 'Post creado correctamente!');
             }catch (\Exception $e){
                 return redirect("/posts");
             }
@@ -73,13 +63,13 @@ use Illuminate\Http\Request;
             $validatedData['image'] = $request->file('image')->store('images/cliente', 'public');
 
             $postEncontrado->update($validatedData);
-            return redirect("/posts");
+            return redirect("/posts")->with('success', 'Post actualizado correctamente!');
         }
 
         //Metodo que elimina una entidad de la db
         public function destroy(Post $post){
             $post->delete();
-            return redirect("/posts");
+            return redirect("/posts")->with('success', 'Post eliminado correctamente!');
         }
     }
 ?>

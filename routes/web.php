@@ -51,8 +51,11 @@
     //Rutas para el primer Cotrolador
     Route::get("/index/{nombre?}", [\App\Http\Controllers\PrimerControlador::class, 'index']);
 
-    //Rutas para el controlador resource de Post
-    Route::resource("/posts", \App\Http\Controllers\Dashboard\PostController::class);
-    //Ruta para el controlador resource de Categoria
-    Route::resource("/categorias", \App\Http\Controllers\Dashboard\CategoriaController::class);
+    /*Agrupamiento de rutas posts y categorias
+    Route::prefix("dashboard")->group(function(){
+        Route::resource("posts", \App\Http\Controllers\Dashboard\PostController::class);
+        Route::resource("categorias", \App\Http\Controllers\Dashboard\CategoriaController::class);
+    });*/
+    Route::resource("posts", \App\Http\Controllers\Dashboard\PostController::class);
+    Route::resource("categorias", \App\Http\Controllers\Dashboard\CategoriaController::class);
 ?>

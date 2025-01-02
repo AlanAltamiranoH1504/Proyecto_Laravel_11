@@ -28,7 +28,7 @@ class CategoriaController extends Controller{
         $validateData = $request->validated();
 
         Category::create($validateData);
-        return redirect('/categorias');
+        return redirect('/categorias')->with('success', 'Categoria creada correctamente');
     }
 
     //Muestra los detalles de una categoria
@@ -42,7 +42,7 @@ class CategoriaController extends Controller{
 
     //Muestra formulario para la edicion de una categoria
     public function edit(string $id){
-        $categoria = Category::find(1);
+        $categoria = Category::find($id);
         return view('dashboard.categorias.edit', [
             'categoria' => $categoria
         ]);
@@ -54,13 +54,13 @@ class CategoriaController extends Controller{
         $validateData = $request->validated();
 
         $categoriaEncontrada->update($validateData);
-        return redirect("/categorias");
+        return redirect("/categorias")->with('success', 'Categoria actualizada correctamente');
     }
 
     //Elimina una categoria
     public function destroy(string $id){
         $categoriaEncontrada = Category::find($id);
         $categoriaEncontrada->delete();
-        return redirect("/categorias");
+        return redirect("/categorias")->with('success', 'Categoria eliminada correctamente');
     }
 }

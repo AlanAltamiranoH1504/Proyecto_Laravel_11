@@ -6,6 +6,13 @@
 @endsection
 {{--Body--}}
 @section('body')
+
+    @if(session('success'))
+        <div style="border: solid 2px black; background: green; text-align: center; color: white; text-transform: uppercase; font-weight: bolder; padding: 10px; margin: 0px auto; max-width: 400px; border-radius: 15px;margin-top: 15px">
+            {{session('success')}}
+        </div>
+    @endif
+
     <div style="margin: 20px auto; max-width: 200px; border-radius: 15px; overflow: hidden;">
         <a style="border: solid 2px black; text-align: center; font-weight: bolder; text-transform: uppercase; text-decoration: none; background: green; color: white; padding: 10px; display: block; border-radius: 15px;"
            href="{{action([\App\Http\Controllers\Dashboard\PostController::class,'create'])}}">
