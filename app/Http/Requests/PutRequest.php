@@ -23,7 +23,7 @@ use Illuminate\Foundation\Http\FormRequest;
                 'slug' => 'required|string|max:500',
                 'description' => 'required|string',
                 'content' => 'required|string',
-                'image' => 'string',
+                'image' => 'mimes:jpeg,jpg,png',
                 'posted' => 'string',
                 'categoria_id' => 'required|string'
             ];
@@ -35,7 +35,7 @@ use Illuminate\Foundation\Http\FormRequest;
                 'slug.required' => 'El slug es requerido',
                 'description.required' => 'La descripcion es requerida',
                 'content.required' => 'La descripcion es requerida',
-                'image.required' => 'La imagen es requerida',
+                'image.mimes' => 'El formato de la imagen no es el correcto',
                 'posted.required' => 'El post es requerido',
                 'categoria_id.required' => 'La categoria es requerida',
             ];

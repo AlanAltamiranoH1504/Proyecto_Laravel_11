@@ -11,7 +11,7 @@
         @yield('header')
     </header>
     {{--Seccion de body--}}
-    <div style="border: solid 2px purple; margin: 15px auto; max-width: 900px">
+    <div style="border: solid 2px purple; margin: 15px auto; width: auto">
         @yield('body')
     </div>
     {{--Seccion de footer--}}

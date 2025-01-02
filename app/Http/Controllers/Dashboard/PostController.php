@@ -69,6 +69,9 @@ use Illuminate\Http\Request;
             $postEncontrado = Post::find($post->id);
             $validatedData = $request->validated();
 
+            //Guardamos en una ubicacion la imagen
+            $validatedData['image'] = $request->file('image')->store('images/cliente', 'public');
+
             $postEncontrado->update($validatedData);
             return redirect("/posts");
         }

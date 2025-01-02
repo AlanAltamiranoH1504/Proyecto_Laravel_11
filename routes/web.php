@@ -53,4 +53,6 @@
 
     //Rutas para el controlador resource de Post
     Route::resource("/posts", \App\Http\Controllers\Dashboard\PostController::class);
+    //Ruta para el controlador resource de Categoria
+    Route::resource("/categorias", \App\Http\Controllers\Dashboard\CategoriaController::class);
 ?>

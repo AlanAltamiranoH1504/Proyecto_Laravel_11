@@ -8,7 +8,7 @@
     @include('dashboard.fragment.erroresFormulario')
 
     <fieldset style="width: 400px; margin: 15px auto">
-        <form action="{{action([\App\Http\Controllers\Dashboard\PostController::class, 'update'], ['post' => $post->id])}}" method="post">
+        <form action="{{action([\App\Http\Controllers\Dashboard\PostController::class, 'update'], ['post' => $post->id])}}" enctype="multipart/form-data" method="post">
             @method('PUT')
             {{csrf_field()}}
             <p>
@@ -29,7 +29,8 @@
             </p>
             <p>
                 <label for="image">Image: </label>
-                <input type="text" name="image" id="image" value="{{old('image', $post->image)}}">
+                <input type="file" name="image">
+{{--                <input type="text" name="image" id="image" value="{{old('image', $post->image)}}">--}}
             </p>
             <p>
                 <label for="posted">Posted: </label>

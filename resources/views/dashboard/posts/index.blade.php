@@ -14,7 +14,7 @@
     </div>
 
     @if($posts != null)
-        <table style="border: 2px solid black; margin: 10px auto; width: 90%; border-collapse: collapse;">
+        <table style="border: 2px solid black; margin: 10px auto; width: 80%; border-collapse: collapse;">
             <thead>
             <tr>
                 <th style="border: 1px solid black;">ID</th>
