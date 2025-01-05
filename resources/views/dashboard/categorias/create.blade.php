@@ -1,39 +1,61 @@
 @extends('dashboard.layout')
 
+{{-- Cabecera --}}
 @section('header')
-    <h1 style="text-align: center">MANEJO DE FORMULARIOS CON CRUD Y MVC</h1>
+    <h1 class="text-center text-3xl font-extrabold text-gray-800 my-6">Manejo de Formularios con CRUD y MVC</h1>
 @endsection
 
-
+{{-- Cuerpo --}}
 @section('body')
-    <h2 style="text-align: center">FORMULARIO DE CREACION DE CATEGORIAS</h2>
-    @include('dashboard.fragment.erroresFormulario')
+    <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        {{-- Título --}}
+        <div class="bg-blue-500 p-6">
+            <h2 class="text-center text-2xl font-semibold text-white">Crear Nueva Categoría</h2>
+        </div>
 
-    <fieldset style="width: 400px; margin: 15px auto">
-        <form method="post" action="{{action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'store'])}}">
-            {{csrf_field()}}
-            <p>
-                <label for="title">Title: </label>
-                <input type="text" name="title" placeholder="Ingresa el titulo">
-            </p>
-            <p>
-                <label for="slug">Slug: </label>
-                <input type="text" name="slug" placeholder="Ingresa el slug">
-            </p>
-            <p>
-                <input type="submit" value="Enviar">
-            </p>
+        {{-- Mensajes de error --}}
+        @include('dashboard.fragment.erroresFormulario')
+
+        {{-- Formulario --}}
+        <form method="POST" action="{{ action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'store']) }}" class="p-6 space-y-6">
+            @csrf
+
+            {{-- Campo Title --}}
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
+                <input type="text" name="title" id="title" placeholder="Ingresa el título"
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            {{-- Campo Slug --}}
+            <div>
+                <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
+                <input type="text" name="slug" id="slug" placeholder="Ingresa el slug"
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            {{-- Botón Enviar --}}
+            <div>
+                <button type="submit"
+                        class="w-full px-4 py-2 bg-blue-600 text-white font-semibold text-sm uppercase rounded-lg hover:bg-blue-700 shadow-md transition">
+                    Crear Categoría
+                </button>
+            </div>
         </form>
-    </fieldset>
+    </div>
 
-    <div style="max-width: 200px; margin: 20px auto; text-align: center;">
-        <a href="{{action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'index'])}}"
-           style="border:solid 1px black; display: inline-block; background-color: green; color: white; padding: 12px 20px; text-align: center; font-weight: bold; text-transform: uppercase; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease;">
-            Ir a Listado
+    {{-- Botón para regresar al listado --}}
+    <div class="text-center mt-6">
+        <a href="{{ action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'index']) }}"
+           class="inline-block px-6 py-2 bg-green-600 text-white font-semibold text-sm uppercase rounded-lg shadow hover:bg-green-700 transition">
+            Volver al Listado
         </a>
     </div>
 @endsection
 
+{{-- Footer --}}
 @section('footer')
-    <h3 style="text-align: center">Alan Altamirano Hernandez - Diciembre 2024</h3>
+    <footer class="text-center mt-12 py-6 bg-gray-100 text-gray-600 border-t">
+        <p>Alan Altamirano Hernández - Diciembre 2024</p>
+    </footer>
 @endsection

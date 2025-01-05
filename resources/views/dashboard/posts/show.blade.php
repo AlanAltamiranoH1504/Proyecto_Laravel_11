@@ -1,50 +1,66 @@
 @extends('dashboard.layout')
 
 @section('header')
-    <h1 style="text-align: center">DETALLES ENTIDAD</h1>
+    <h1 class="text-center text-3xl font-bold text-gray-800 my-6">Detalles de Entidad</h1>
 @endsection
 
 @section('body')
     @if($post != null)
-        <table style="border: 2px solid black; margin: 10px auto; width: 90%; border-collapse: collapse;">
-            <thead>
+        {{-- Tabla de Detalles --}}
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+                <thead class="bg-blue-500 text-white">
                 <tr>
-                    <th style="border: 1px solid black;">ID</th>
-                    <th style="border: 1px solid black;">TITLE</th>
-                    <th style="border: 1px solid black;">SLUG</th>
-                    <th style="border: 1px solid black;">DESCRIPTION</th>
-                    <th style="border: 1px solid black;">CONTENT</th>
-                    <th style="border: 1px solid black;">IMAGE</th>
-                    <th style="border: 1px solid black;">POSTED</th>
-                    <th style="border: 1px solid black;">CATEGORIA_ID</th>
-                    <th style="border: 1px solid black;">DETALLES</th>
+                    <th class="px-4 py-2 text-left">ID</th>
+                    <th class="px-4 py-2 text-left">Título</th>
+                    <th class="px-4 py-2 text-left">Slug</th>
+                    <th class="px-4 py-2 text-left">Descripción</th>
+                    <th class="px-4 py-2 text-left">Contenido</th>
+                    <th class="px-4 py-2 text-left">Imagen</th>
+                    <th class="px-4 py-2 text-left">Publicado</th>
+                    <th class="px-4 py-2 text-left">ID Categoría</th>
+                    <th class="px-4 py-2 text-left">Acciones</th>
                 </tr>
-            </thead>
-            <tbody style="text-align: center">
+                </thead>
+                <tbody class="text-center text-sm">
                 <tr>
-                    <td>{{$post->id}}</td>
-                    <td style="border: 1px solid black;">{{$post->title}}</td>
-                    <td style="border: 1px solid black;">{{$post->slug}}</td>
-                    <td style="border: 1px solid black;">{{$post->description}}</td>
-                    <td style="border: 1px solid black;">{{$post->content}}</td>
-                    <td style="border: 1px solid black;">{{$post->image}}</td>
-                    <td style="border: 1px solid black;">{{$post->posted}}</td>
-                    <td style="border: 1px solid black;">{{$post->categoria_id}}</td>
-                    <td style="border: 1px solid black;"><a href="{{action([\App\Http\Controllers\Dashboard\PostController::class, 'edit'], ["post" => $post->id])}}" style="border: solid 1px black; text-align: center; font-weight: lighter; text-decoration: none; background: #05a7dc; color: black; padding: 1px; display: block; border-radius: 15px;">Editar</a></td>
-                    <td style="border: 1px solid black;"><a href="" style="border: solid 1px black; text-align: center; font-weight: lighter; text-decoration: none; background: red; color: black; padding: 1px; display: block; border-radius: 15px;">Eliminar</a></td>
+                    <td class="border px-4 py-3">{{ $post->id }}</td>
+                    <td class="border px-4 py-3">{{ $post->title }}</td>
+                    <td class="border px-4 py-3">{{ $post->slug }}</td>
+                    <td class="border px-4 py-3">{{ $post->description }}</td>
+                    <td class="border px-4 py-3">{{ $post->content }}</td>
+                    <td class="border px-4 py-3">{{ $post->image }}</td>
+                    <td class="border px-4 py-3">{{ $post->posted }}</td>
+                    <td class="border px-4 py-3">{{ $post->categoria_id }}</td>
+                    <td class="border px-4 py-3 space-x-2">
+                        {{-- Botón Editar --}}
+                        <a href="{{ action([\App\Http\Controllers\Dashboard\PostController::class, 'edit'], ['post' => $post->id]) }}"
+                           class="inline-block px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition">
+                            Editar
+                        </a>
+                        {{-- Botón Eliminar --}}
+                        <a href="#"
+                           class="inline-block px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition">
+                            Eliminar
+                        </a>
+                    </td>
                 </tr>
-            </tbody>
-        </table>
-        <div style="max-width: 200px; margin: 20px auto; text-align: center;">
-            <a href="{{action([\App\Http\Controllers\Dashboard\PostController::class, 'index'])}}"
-               style=" border:solid 1px black; display: inline-block; background-color: green; color: white; padding: 12px 20px; text-align: center; font-weight: bold; text-transform: uppercase; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease;">
+                </tbody>
+            </table>
+        </div>
+
+        {{-- Botón para regresar al listado --}}
+        <div class="text-center mt-6">
+            <a href="{{ action([\App\Http\Controllers\Dashboard\PostController::class, 'index']) }}"
+               class="inline-block px-6 py-2 bg-green-600 text-white font-semibold text-sm uppercase rounded-lg shadow hover:bg-green-700 transition">
                 Ir a Listado
             </a>
         </div>
-
     @endif
 @endsection
 
 @section('footer')
-    <h3 style="text-align: center">Alan Altamirano Hernandez - Diciembre 2024</h3>
+    <footer class="text-center mt-12 py-6 bg-gray-100 text-gray-600 border-t">
+        <p>Alan Altamirano Hernández - Diciembre 2024</p>
+    </footer>
 @endsection

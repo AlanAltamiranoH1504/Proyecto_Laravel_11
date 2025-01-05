@@ -1,56 +1,82 @@
 @extends('dashboard.layout')
 
+{{-- Cabecera --}}
 @section('header')
-    <h1 style="text-align: center">LISTADO DE CATEGORIAS</h1>
+    <h1 class="text-center text-2xl font-bold text-gray-800 my-4">Listado de Categorías</h1>
 @endsection
 
+{{-- Cuerpo --}}
 @section('body')
-    {{--Mensajes de session--}}
+
+    {{-- Mensaje de Éxito --}}
     @if(session('success'))
-        <div style="border: solid 2px black; background: green; text-align: center; color: white; text-transform: uppercase; font-weight: bolder; padding: 10px; margin: 0px auto; max-width: 400px; border-radius: 15px;margin-top: 15px">
-            {{session('success')}}
+        <div class="max-w-4xl mx-auto my-4 px-4 py-2 bg-green-100 border border-green-400 text-green-700 rounded shadow">
+            {{ session('success') }}
         </div>
     @endif
 
-    @if($categorias != null)
-        <div style="margin: 20px auto; max-width: 200px; border-radius: 15px; overflow: hidden;">
-            <a style="border: solid 2px black; text-align: center; font-weight: bolder; text-transform: uppercase; text-decoration: none; background: green; color: white; padding: 10px; display: block; border-radius: 15px;"
-               href="{{action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'create'])}}">
-                Crear Nueva Categoira
-            </a>
-        </div>
+    {{-- Botón Crear Nueva Categoría --}}
+    <div class="text-center my-6">
+        <a href="{{ action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'create']) }}"
+           class="inline-block px-6 py-2 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow hover:bg-blue-700 transition">
+            Crear Nueva Categoría
+        </a>
+    </div>
 
-        <table style="border: 2px solid black; margin: 10px auto; width: 60%; border-collapse: collapse;">
-            <thead>
-            <tr>
-                <th style="border: 1px solid black;">ID</th>
-                <th style="border: 1px solid black;">TITLE</th>
-                <th style="border: 1px solid black;">SLUG</th>
-                <th style="border: 1px solid black;">Edicion</th>
-                <th style="border: 1px solid black;">Borrado</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($categorias as $categoria)
-                <tr style="text-align: center">
-                    <td style="border: 1px solid black;">{{$categoria->id}} → <a href="{{action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'show'], ['categoria' => $categoria->id])}}">Detalles</a> </td>
-                    <td style="border: 1px solid black;">{{$categoria->title}}</td>
-                    <td style="border: 1px solid black;">{{$categoria->slug}}</td>
-                    <td style="border: 1px solid black;"><a href="{{action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'edit'], ['categoria' => $categoria->id])}}" style="border: solid 1px black; text-align: center; font-weight: lighter; text-decoration: none; background: #05a7dc; color: black; padding: 1px; display: block; border-radius: 15px;">Editar</a></td>
-                    <td style="border: 1px solid black;">
-                        <form method="post" action="{{action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'destroy'], ['categoria' => $categoria->id])}}">
-                            {{csrf_field()}}
-                            @method('DELETE')
-                            <button type="submit" style="border: solid 1px black; text-align: center; font-weight: lighter; text-decoration: none; background: red; color: black; padding: 5px; border-radius: 15px; cursor: pointer;">Eliminar</button>
-                        </form>
-                    </td>
+    {{-- Tabla de Categorías --}}
+    @if($categorias != null)
+        <div class="overflow-x-auto max-w-4xl mx-auto">
+            <table class="w-full text-sm text-left border shadow rounded-lg overflow-hidden">
+                <thead class="bg-blue-600 text-white uppercase text-sm">
+                <tr>
+                    <th class="px-4 py-3 text-center">ID</th>
+                    <th class="px-4 py-3 text-center">Título</th>
+                    <th class="px-4 py-3 text-center">Slug</th>
+                    <th class="px-4 py-3 text-center">Editar</th>
+                    <th class="px-4 py-3 text-center">Eliminar</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach($categorias as $categoria)
+                    <tr class="{{ $loop->odd ? 'bg-gray-100' : 'bg-white' }} hover:bg-gray-50">
+                        <td class="px-4 py-3 text-center border-b">
+                            {{$categoria->id}} -
+                            <a href="{{ action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'show'], ['categoria' => $categoria->id]) }}"
+                               class="text-blue-600 hover:underline">
+                                Detalles
+                            </a>
+                        </td>
+                        <td class="px-4 py-3 text-center border-b">{{$categoria->title}}</td>
+                        <td class="px-4 py-3 text-center border-b">{{$categoria->slug}}</td>
+                        <td class="px-4 py-3 text-center border-b">
+                            <a href="{{ action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'edit'], ['categoria' => $categoria->id]) }}"
+                               class="inline-block px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+                                Editar
+                            </a>
+                        </td>
+                        <td class="px-4 py-3 text-center border-b">
+                            <form method="POST"
+                                  action="{{ action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'destroy'], ['categoria' => $categoria->id]) }}"
+                                  class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                        class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     @endif
 @endsection
 
+{{-- Footer --}}
 @section('footer')
-    <h3 style="text-align: center">Alan Altamirano Hernandez - Diciembre 2024</h3>
+    <footer class="text-center mt-12 py-4 border-t text-gray-600">
+        Alan Altamirano Hernández - Diciembre 2024
+    </footer>
 @endsection

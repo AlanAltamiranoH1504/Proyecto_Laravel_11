@@ -1,70 +1,103 @@
 @extends("dashboard.layout")
 
-{{--Seccion de cabecera--}}
+{{-- Sección de cabecera --}}
 @section("header")
-    <h1 style="text-align: center">MANEJO DE FORMULARIOS CON CRUD Y MVC</h1>
+    <h1 class="text-center text-3xl font-bold text-gray-800 my-6">Manejo de Formularios con CRUD y MVC</h1>
 @endsection
 
-{{--Seccion de body--}}
+{{-- Sección de body --}}
 @section("body")
-    <h1 style="text-align: center">Aqui es donde va a estar el formulario</h1>
-    @include('dashboard.fragment.erroresFormulario')
+    <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        {{-- Título del Formulario --}}
+        <div class="bg-blue-500 p-6">
+            <h2 class="text-center text-2xl font-semibold text-white">Formulario de Creación de Posts</h2>
+        </div>
 
-    {{--Definimos el formulario--}}
-    <fieldset style="width: 400px; margin: 15px auto">
-        <form method="post" action="{{action([\App\Http\Controllers\Dashboard\PostController::class, "store"])}}">
-            {{csrf_field()}}
-            <p>
-                <label for="title">Title: </label>
-                <input type="text" name="title" id="title">
-            </p>
-            <p>
-                <label for="slug">Slug: </label>
-                <input type="text" name="slug" id="slug">
-            </p>
-            <p>
-                <label for="description">Description: </label>
-                <input type="text" name="description" id="description">
-            </p>
-            <p>
-                <label for="content">Content: </label>
-                <input type="text" name="content" id="content">
-            </p>
-            <p>
-                <label for="image">Image: </label>
-                <input type="text" name="image" id="image">
-            </p>
-            <p>
-                <label for="posted">Posted: </label>
-                <select name="posted">
-                    <option value="">Seleccione una opcion</option>
-                    <option value="yes">Yes</option>
+        {{-- Mensajes de Error --}}
+        @include('dashboard.fragment.erroresFormulario')
+
+        {{-- Formulario --}}
+        <form method="POST" action="{{ action([\App\Http\Controllers\Dashboard\PostController::class, "store"]) }}" class="p-6 space-y-6">
+            @csrf
+
+            {{-- Campo Title --}}
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
+                <input type="text" name="title" id="title" placeholder="Ingresa el título"
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            {{-- Campo Slug --}}
+            <div>
+                <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
+                <input type="text" name="slug" id="slug" placeholder="Ingresa el slug"
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            {{-- Campo Description --}}
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
+                <input type="text" name="description" id="description" placeholder="Ingresa la descripción"
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            {{-- Campo Content --}}
+            <div>
+                <label for="content" class="block text-sm font-medium text-gray-700">Contenido</label>
+                <textarea name="content" id="content" placeholder="Ingresa el contenido"
+                          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+            </div>
+
+            {{-- Campo Image --}}
+            <div>
+                <label for="image" class="block text-sm font-medium text-gray-700">Imagen</label>
+                <input type="text" name="image" id="image" placeholder="URL de la imagen"
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            {{-- Campo Posted --}}
+            <div>
+                <label for="posted" class="block text-sm font-medium text-gray-700">Publicado</label>
+                <select name="posted" id="posted" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Seleccione una opción</option>
+                    <option value="yes">Sí</option>
                     <option value="no">No</option>
                 </select>
-            </p>
-            <p>
-                <label for="category_id">Category ID: </label>
-                <select id="categoria_id" name="categoria_id">
-                    <option value="">Seleccione una opcion</option>
+            </div>
+
+            {{-- Campo Category ID --}}
+            <div>
+                <label for="categoria_id" class="block text-sm font-medium text-gray-700">Categoría</label>
+                <select name="categoria_id" id="categoria_id" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Seleccione una categoría</option>
                     @foreach($categorias as $categoria)
-                        <option value="{{$categoria->id}}">{{$categoria->title}}</option>
+                        <option value="{{ $categoria->id }}">{{ $categoria->title }}</option>
                     @endforeach
                 </select>
-            </p>
-            <div style="margin: 0px auto; max-width: 50px">
-                <input type="submit" value="Enviar" style="margin: 10px auto">
+            </div>
+
+            {{-- Botón Enviar --}}
+            <div>
+                <button type="submit"
+                        class="w-full px-4 py-2 bg-blue-600 text-white font-semibold text-sm uppercase rounded-lg hover:bg-blue-700 shadow-md transition">
+                    Crear Post
+                </button>
             </div>
         </form>
-    </fieldset>
-    <div style="max-width: 200px; margin: 20px auto; text-align: center;">
-        <a href="{{action([\App\Http\Controllers\Dashboard\PostController::class, 'index'])}}"
-           style=" border:solid 1px black; display: inline-block; background-color: green; color: white; padding: 12px 20px; text-align: center; font-weight: bold; text-transform: uppercase; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease;">
-            Ir a Listado
+    </div>
+
+    {{-- Botón para regresar al listado --}}
+    <div class="text-center mt-6">
+        <a href="{{ action([\App\Http\Controllers\Dashboard\PostController::class, 'index']) }}"
+           class="inline-block px-6 py-2 bg-green-600 text-white font-semibold text-sm uppercase rounded-lg shadow hover:bg-green-700 transition">
+            Volver al Listado
         </a>
     </div>
 @endsection
 
-{{--Seccion de footer--}}
+{{-- Sección de footer --}}
 @section("footer")
-    <h3 style="text-align: center">Alan Altamirano Hernandez - Diciembre 2024</h3>
+    <footer class="text-center mt-12 py-6 bg-gray-100 text-gray-600 border-t">
+        <p>Alan Altamirano Hernández - Diciembre 2024</p>
+    </footer>
 @endsection

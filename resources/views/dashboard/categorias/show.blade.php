@@ -1,34 +1,47 @@
 @extends('dashboard.layout')
 
 @section('header')
-    <h1 style="text-align: center">DETALLES DE CATEGORI</h1>
+    <h1 class="text-center text-3xl font-bold text-gray-800 my-6">Detalles de Categoría</h1>
 @endsection
 
-
 @section('body')
+    <div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        {{-- Encabezado de Detalles --}}
+        <div class="bg-blue-500 p-6">
+            <h2 class="text-center text-2xl font-semibold text-white">Información de la Categoría</h2>
+        </div>
 
-    <fieldset style="width: 400px; margin: 15px auto">
-        <form method="post">
-            {{csrf_field()}}
-            <p>
-                <label for="title">Title: </label>
-                <input type="text" name="title" value="{{$categoria->title}}">
-            </p>
-            <p>
-                <label for="slug">Slug: </label>
-                <input type="text" name="slug" value="{{$categoria->slug}}">
-            </p>
+        {{-- Formulario de Detalles (Solo lectura por defecto) --}}
+        <form method="POST" class="p-6 space-y-6">
+            @csrf
+
+            {{-- Campo Title --}}
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
+                <input type="text" name="title" id="title" value="{{ $categoria->title }}" readonly
+                       class="mt-1 w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            {{-- Campo Slug --}}
+            <div>
+                <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
+                <input type="text" name="slug" id="slug" value="{{ $categoria->slug }}" readonly
+                       class="mt-1 w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
         </form>
-    </fieldset>
+    </div>
 
-    <div style="max-width: 200px; margin: 20px auto; text-align: center;">
-        <a href="{{action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'index'])}}"
-           style="border:solid 1px black; display: inline-block; background-color: green; color: white; padding: 12px 20px; text-align: center; font-weight: bold; text-transform: uppercase; text-decoration: none; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: background-color 0.3s ease;">
-            Ir a Listado
+    {{-- Botón para regresar al listado --}}
+    <div class="text-center mt-6">
+        <a href="{{ action([\App\Http\Controllers\Dashboard\CategoriaController::class, 'index']) }}"
+           class="inline-block px-6 py-2 bg-green-600 text-white font-semibold text-sm uppercase rounded-lg shadow hover:bg-green-700 transition">
+            Volver al Listado
         </a>
     </div>
 @endsection
 
 @section('footer')
-    <h3 style="text-align: center">Alan Altamirano Hernandez - Diciembre 2024</h3>
+    <footer class="text-center mt-12 py-6 bg-gray-100 text-gray-600 border-t">
+        <p>Alan Altamirano Hernández - Diciembre 2024</p>
+    </footer>
 @endsection

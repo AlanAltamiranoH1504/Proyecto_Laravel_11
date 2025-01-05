@@ -1,74 +1,96 @@
 @extends('dashboard.layout')
 
-{{--Cabecera--}}
+{{-- Cabecera --}}
 @section('header')
-    <h1 style="text-align: center">LISTADO DE POSTS</h1>
+    <h1 class="text-center text-2xl font-bold text-gray-800 my-4">Listado de Posts</h1>
 @endsection
-{{--Body--}}
+
+{{-- Cuerpo --}}
 @section('body')
 
+    {{-- Mensaje de Éxito --}}
     @if(session('success'))
-        <div style="border: solid 2px black; background: green; text-align: center; color: white; text-transform: uppercase; font-weight: bolder; padding: 10px; margin: 0px auto; max-width: 400px; border-radius: 15px;margin-top: 15px">
-            {{session('success')}}
+        <div class="max-w-4xl mx-auto my-4 px-4 py-2 bg-green-100 border border-green-400 text-green-700 rounded">
+            {{ session('success') }}
         </div>
     @endif
 
-    <div style="margin: 20px auto; max-width: 200px; border-radius: 15px; overflow: hidden;">
-        <a style="border: solid 2px black; text-align: center; font-weight: bolder; text-transform: uppercase; text-decoration: none; background: green; color: white; padding: 10px; display: block; border-radius: 15px;"
-           href="{{action([\App\Http\Controllers\Dashboard\PostController::class,'create'])}}">
+    {{-- Botón Crear Nuevo Post --}}
+    <div class="text-center my-6">
+        <a href="{{ action([\App\Http\Controllers\Dashboard\PostController::class, 'create']) }}"
+           class="inline-block px-6 py-2 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow hover:bg-blue-700 transition">
             Crear Nuevo Post
         </a>
     </div>
 
+    {{-- Tabla de Posts --}}
     @if($posts != null)
-        <table style="border: 2px solid black; margin: 10px auto; width: 80%; border-collapse: collapse;">
-            <thead>
-            <tr>
-                <th style="border: 1px solid black;">ID</th>
-                <th style="border: 1px solid black;">TITLE</th>
-                <th style="border: 1px solid black;">SLUG</th>
-                <th style="border: 1px solid black;">DESCRIPTION</th>
-                <th style="border: 1px solid black;">CONTENT</th>
-                <th style="border: 1px solid black;">IMAGE</th>
-                <th style="border: 1px solid black;">POSTED</th>
-                <th style="border: 1px solid black;">CATEGORIA_ID</th>
-                <th style="border: 1px solid black">Edicion</th>
-                <th style="border: 1px solid black">Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($posts as $post)
-                <tr style="text-align: center">
-                    <td style="border: 1px solid black;">{{$post->id}} - <a href="{{action([\App\Http\Controllers\Dashboard\PostController::class, 'show'], ['post' => $post->id])}}">Detalles</a></td>
-                    <td style="border: 1px solid black;">{{$post->title}}</td>
-                    <td style="border: 1px solid black;">{{$post->slug}}</td>
-                    <td style="border: 1px solid black;">{{$post->description}}</td>
-                    <td style="border: 1px solid black;">{{$post->content}}</td>
-                    <td style="border: 1px solid black;">{{$post->image}}</td>
-                    <td style="border: 1px solid black;">{{$post->posted}}</td>
-                    <td style="border: 1px solid black;">{{$post->categoria_id}}</td>
-                    <td style="border: 1px solid black;"><a href="{{action([\App\Http\Controllers\Dashboard\PostController::class, 'edit'], ["post" => $post->id])}}" style="border: solid 1px black; text-align: center; font-weight: lighter; text-decoration: none; background: #05a7dc; color: black; padding: 1px; display: block; border-radius: 15px;">Editar</a></td>
-                    <td style="border: 1px solid black;">
-                        <form action="{{ action([\App\Http\Controllers\Dashboard\PostController::class, 'destroy'], ['post' => $post->id]) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" style="border: solid 1px black; text-align: center; font-weight: lighter; text-decoration: none; background: red; color: black; padding: 5px; border-radius: 15px; cursor: pointer;">
-                                Eliminar
-                            </button>
-                        </form>
-                    </td>
-
+        <div class="overflow-x-auto max-w-7xl mx-auto">
+            <table class="w-full text-sm text-left border shadow rounded-lg overflow-hidden">
+                <thead class="bg-blue-600 text-white uppercase text-sm">
+                <tr>
+                    <th class="px-4 py-3 text-center">ID</th>
+                    <th class="px-4 py-3 text-center">Título</th>
+                    <th class="px-4 py-3 text-center">Slug</th>
+                    <th class="px-4 py-3 text-center">Descripción</th>
+                    <th class="px-4 py-3 text-center">Contenido</th>
+                    <th class="px-4 py-3 text-center">Imagen</th>
+                    <th class="px-4 py-3 text-center">Publicado</th>
+                    <th class="px-4 py-3 text-center">Categoría</th>
+                    <th class="px-4 py-3 text-center">Editar</th>
+                    <th class="px-4 py-3 text-center">Eliminar</th>
                 </tr>
-            @endforeach
-            </tbody>
-        </table>
-        <div>
-            {{$posts->links()}}
+                </thead>
+                <tbody>
+                @foreach($posts as $post)
+                    <tr class="{{ $loop->odd ? 'bg-gray-100' : 'bg-white' }} hover:bg-gray-50">
+                        <td class="px-4 py-3 text-center border-b">
+                            {{$post->id}} -
+                            <a href="{{ action([\App\Http\Controllers\Dashboard\PostController::class, 'show'], ['post' => $post->id]) }}"
+                               class="text-blue-600 hover:underline">
+                                Detalles
+                            </a>
+                        </td>
+                        <td class="px-4 py-3 text-center border-b">{{$post->title}}</td>
+                        <td class="px-4 py-3 text-center border-b">{{$post->slug}}</td>
+                        <td class="px-4 py-3 text-center border-b">{{$post->description}}</td>
+                        <td class="px-4 py-3 text-center border-b truncate max-w-xs">{{$post->content}}</td>
+                        <td class="px-4 py-3 text-center border-b">{{$post->image}}</td>
+                        <td class="px-4 py-3 text-center border-b">{{$post->posted}}</td>
+                        <td class="px-4 py-3 text-center border-b">{{$post->categoria_id}}</td>
+                        <td class="px-4 py-3 text-center border-b">
+                            <a href="{{ action([\App\Http\Controllers\Dashboard\PostController::class, 'edit'], ['post' => $post->id]) }}"
+                               class="inline-block px-4 py-2 bg-green-600 text-white font-medium text-sm uppercase rounded shadow hover:bg-green-700 transition">
+                                Editar
+                            </a>
+                        </td>
+                        <td class="px-4 py-3 text-center border-b">
+                            <form action="{{ action([\App\Http\Controllers\Dashboard\PostController::class, 'destroy'], ['post' => $post->id]) }}"
+                                  method="POST" class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                        class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        {{-- Paginación --}}
+        <div class="mt-6">
+            {{ $posts->links('pagination::tailwind') }}
         </div>
     @endif
 @endsection
 
-{{--Footer--}}
+{{-- Footer --}}
 @section('footer')
-    <h3 style="text-align: center">Alan Altamirano Hernandez - Diciembre 2024</h3>
+    <footer class="text-center mt-12 py-4 border-t text-gray-600">
+        Alan Altamirano Hernández - Diciembre 2024
+    </footer>
 @endsection
