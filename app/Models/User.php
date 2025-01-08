@@ -23,6 +23,10 @@ class User extends Authenticatable
         'password',
     ];
 
+    //Metodo que virifica el tipo de usuario
+    public function isAdmin(){
+        return $this->rol == "admin";
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

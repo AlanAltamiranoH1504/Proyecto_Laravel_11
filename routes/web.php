@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\UserAccessDashboardMiddleware;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,7 +19,7 @@ Route::middleware('auth')->group(function () {
 });
 
 //Agregamos rutas para Post y Categorias
-Route::middleware('auth')->resource("/posts", \App\Http\Controllers\Dashboard\PostController::class);
-Route::middleware('auth')->resource("/categorias", \App\Http\Controllers\Dashboard\CategoriaController::class);
+Route::middleware(['auth', UserAccessDashboardMiddleware::class])->resource("/posts", \App\Http\Controllers\Dashboard\PostController::class);
+Route::middleware(['auth', UserAccessDashboardMiddleware::class])->resource("/categorias", \App\Http\Controllers\Dashboard\CategoriaController::class);
 
 require __DIR__.'/auth.php';
